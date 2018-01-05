@@ -21,20 +21,30 @@ class Dnd(object):
         Function for taking certain damage
         """
         player.hp -= random.randint(1,6)
+        if player.hp < 0:
+            player.hp = 0
+        if player.hp > 0:
+            print(f"Your opponent attacks you, but you still have {player.hp} left.\n")
+        if player.hp == 0:
+            print("Your opponent finds a crack in your defenses and strikes you down!")
+            print("GAME OVER")
 
-#function that checks and prints a game over message if the player's hp reaches or is less than 0
-    def dead():
-        if player.hp <= 0:
-            print("ur ded")
-            print("git gud")
 
 #function that sets the damage of the lightsaber
     def attack():
         opponent.hp -= random.randint(2,8)
+        if opponent.hp < 0:
+            opponent.hp = 0
 
+#the heal ability
     def heal():
-        player.hp += 5
+        player.hp += random.randint(3,7)
         player.mp -= 7
+
+#force push
+    def force_push():
+        opponent.hp -= random.randint(1,6)
+        player.mp -= 5
 
     def status():
         print(f"""
@@ -44,20 +54,45 @@ class Dnd(object):
         feats : {player.feats}
         """)
 
-#function that defines combat
-    def combat():
-        while player.hp > 0:
-            if player.hp <= 0:
-                Dnd.dead()
-                break
-            elif opponent.hp <= 0:
-                print("You defeated your opponent!")
-                player.hp += 10
-                break
-            Dnd.attack()
-            print(f"You attack and your opponent has {opponent.hp} health left!")
-            Dnd.lose_hp()
-            print(f"The knight cuts you and you now have {player.hp} health left!")
+#allows the player to decide what they will do in combat
+    def docombat():
+        while opponent.hp > 0:
+            a = input(f"-You can attack (atk) or use one of your feats, {player.feats}. You may also check your status (status).\n-What will you do?\n")
+            if a == "atk".lower():
+                Dnd.attack()
+                print(f"Your opponent now has {opponent.hp} health left.")
+                if opponent.hp > 0:
+                    Dnd.lose_hp()
+            if a == "attack".lower():
+                Dnd.attack()
+                print(f"Your opponent now has {opponent.hp} health left.")
+                if opponent.hp > 0:
+                    Dnd.lose_hp()
+            if a == "heal".lower():
+                if player.mp >= 7:
+                    Dnd.heal()
+                    print(f"You have {player.hp} health.")
+                    if opponent.hp > 0:
+                        Dnd.lose_hp()
+            if a == "status":
+                Dnd.status()
+            if a == "force push":
+                Dnd.force_push()
+                print(f"Your opponent now has {opponent.hp} health left.")
+                b = random.randint(1,4)
+                if b == 1:
+                    if opponent.hp > 0:
+                        Dnd.lose_hp()
+                if b == 2:
+                    if opponent.hp > 0:
+                        Dnd.lose_hp()
+                if b == 3:
+                    if opponent.hp > 0:
+                        Dnd.lose_hp()
+                if b == 4:
+                    print("You knock your opponent down, he loses a turn!\n")
+
+
 
 #defines the traits of each class and the first opponent
 guardian = Dnd(25, 10, {"robes": 1, "lightsaber": 1}, ["flurry", "force push"])
@@ -126,20 +161,18 @@ while True:
 #time.sleep(4)
 #print(f"\"Furthermore, if you succeed in this, your title will be changed to master {name}, and you will be granted a seat on this council.\"")
 
-print("""
+#print("""
 
-You land to the coordinates on Mustafar. You look up and see a giant black and red tower raise high above you.
+#You land to the coordinates on Mustafar. You look up and see a giant black and red tower raise high above you.
 
-""")
+#""")
 
-for x in range(15):
-    print(player.hp)
-    Dnd.lose_hp()
-    if player.hp <= 0:
-        player.hp = 0
-    if player.hp == 0:
-        print("u r ded lol")
-        break
+
+
+Dnd.docombat()
+
+
+
 
 
 
