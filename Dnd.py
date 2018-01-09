@@ -39,12 +39,14 @@ class Dnd(object):
 #the heal ability
     def heal():
         player.hp += random.randint(3,7)
-        player.mp -= 7
+        player.mp -= 5
+        print(f"You now have {player.mp} mana points")
 
 #force push
     def force_push():
         opponent.hp -= random.randint(1,6)
         player.mp -= 5
+        print(f"You now have {player.mp} mana points")
 
     def status():
         print(f"""
@@ -58,6 +60,8 @@ class Dnd(object):
     def docombat():
         while opponent.hp > 0:
             a = input(f"-You can attack (atk) or use one of your feats, {player.feats}. You may also check your status (status).\n-What will you do?\n")
+            if player.hp == 0:
+                break
             if a == "atk".lower():
                 Dnd.attack()
                 print(f"Your opponent now has {opponent.hp} health left.")
@@ -91,6 +95,8 @@ class Dnd(object):
                         Dnd.lose_hp()
                 if b == 4:
                     print("You knock your opponent down, he loses a turn!\n")
+            if player == 0:
+                break
 
 
 
@@ -103,17 +109,17 @@ opponent = Dnd(20, 10, {"sword": 1, "key": 1}, ["power strike"])
 
 #Welcome and choosing name
 print("""Welcome to Michael Hensley's Star Wars DnD game! First step before you start your journey is to choose a character name.""")
-#time.sleep(2)
+time.sleep(2)
 name = input("What will your character's name be?  ")
 
 #class info
 print(f"-Welcome, jedi knight {name}. There are three classes you may choose from.")
-#time.sleep(2)
+time.sleep(2)
 print(f"""-The first, the guardian has an health points of {guardian.hp}, mana points of {guardian.mp}, starts
 with an inventory of {guardian.inven}, and is able to use {guardian.feats}.""")
-#time.sleep(4)
+time.sleep(4)
 print(f"-Next is the sentinel, who has {sentinel.hp} hp, {sentinel.mp} mp, an inventory of {sentinel.inven}, and can use {sentinel.feats}.")
-#time.sleep(4)
+time.sleep(4)
 print(f"""-The final class is the counsular, who has {counsular.hp} hp,{counsular.mp} mp, an inventory of {counsular.inven}, and can use
 {counsular.feats}.""")
 
@@ -139,33 +145,33 @@ while True:
 
 
 #exposition before the game starts
-#time.sleep(3)
-#print("\nThere is yet unrest in the galaxy.")
-#time.sleep(1.5)
-#print("The jedi-sith wars rage on")
-#time.sleep(1.5)
-#print("Thousands of jedi have died in the ongoing six year war.")
-#time.sleep(2)
-#print("However, hope has been restored to the jedi. The sith overlord's position has been revealed.")
-#time.sleep(3.5)
-#print("""You stand in the council room which you are so familiar with, the same place where you were granted the rank of knight
-#six years before.""")
-#time.sleep(4)
-#print("\"This war is coming to an end,\" Master Vrook says.")
-#time.sleep(2)
-#print("\"This mission you're about to embark can very well bring this world back to peace and balance.\"")
-#time.sleep(3)
-#print("\"We need you to travel to Mustafar to these coordinates, and defeat Darth Ragnos,\" Master Alis continued.")
-#time.sleep(4)
-#print(f"\"Her defeat will be a quick and decisive end to this war. We're counting on you, {name}.\"")
-#time.sleep(4)
-#print(f"\"Furthermore, if you succeed in this, your title will be changed to master {name}, and you will be granted a seat on this council.\"")
+time.sleep(3)
+print("\nThere is yet unrest in the galaxy.")
+time.sleep(1.5)
+print("The jedi-sith wars rage on")
+time.sleep(1.5)
+print("Thousands of jedi have died in the ongoing six year war.")
+time.sleep(2)
+print("However, hope has been restored to the jedi. The sith overlord's position has been revealed.")
+time.sleep(3.5)
+print("""You stand in the council room which you are so familiar with, the same place where you were granted the rank of knight
+six years before.""")
+time.sleep(4)
+print("\"This war is coming to an end,\" Master Vrook says.")
+time.sleep(2)
+print("\"This mission you're about to embark can very well bring this world back to peace and balance.\"")
+time.sleep(3)
+print("\"We need you to travel to Mustafar to these coordinates, and defeat Darth Ragnos,\" Master Alis continued.")
+time.sleep(4)
+print(f"\"Her defeat will be a quick and decisive end to this war. We're counting on you, {name}.\"")
+time.sleep(4)
+print(f"\"Furthermore, if you succeed in this, your title will be changed to master {name}, and you will be granted a seat on this council.\"")
 
-#print("""
+print("""
 
-#You land to the coordinates on Mustafar. You look up and see a giant black and red tower raise high above you.
+You land to the coordinates on Mustafar. You look up and see a giant black and red tower raise high above you.
 
-#""")
+""")
 
 
 
