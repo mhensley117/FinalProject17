@@ -223,7 +223,7 @@ while True:
 #time.sleep(3)
 
 #First time the player gets to play lol first interaction with a guard at the front gate
-while True:
+while player.hp > 0:
     A = input("\nIn front of the tower, you can see a guard sitting near the enterance of the tower, slouching in his chair nodding off. What do you do? You can attempt to sneak past, fight him, or talk to him. ")
     if A == "fight":
         print("\nAs you approach the guard, he takes notice to you and arms his red lightsaber!")
@@ -235,38 +235,42 @@ while True:
         break
     if A == "talk":
         if player == counsular:
-            print("You approach the guard with an air of friendliness and light.")
+            print("'Maybe if I convince him I'm his leader, or ask to pass nicely I can go...' you think to yourself")
             time.sleep(1.5)
-            print("The man perks up a little bit but goes back into his slouching position.")
-            A1 = input("\"What do you want?\" ")
-            if "pass" in A1:
-                print("\"To be honest I don't really care just go.\"")
-            if "go" in A1:
-                print("\"Just go up the tower whatever.\"")
-            if "ragnos".lower() in A1:
-                print("\"I'm so sorry my lord I've never seen you before, please spare my life.\"")
-                time.sleep(1)
-                A4 = input("\nThe guard kneels at your feet, what do you do?(kill, spare) ")
-                if A4 == "kill".lower():
-                    print("Consumed by your anger and hatred for the sith, you strike down the defensless guard. Your dark side points increase by one.")
-                    dp = 1
-                    break
-                if A4 == "spare".lower():
-                    print("Seeing no point in destroying the guard, you continue into the tower. Your light side points have increased by one.")
-                    lp = 1
-                    break
-            else:
-                print("At the sound of your voice, the guard stands up quickly realizing you are a jedi.")
-                time.sleep(1)
-                print("He ignites his red lightsaber!")
-                time.sleep(.833)
-                print("\"Now you die jedi!\"")
-                Dnd.docombat()
+        print("The man perks up a little bit but goes back into his slouching position.")
+        A1 = input("\"What do you want?\" ")
+        if "pass" in A1:
+            print("\"To be honest I don't really care just go.\"")
+            break
+        if "go" in A1:
+            print("\"Just go up the tower whatever.\"")
+            break
+        if "ragnos".lower() in A1:
+            print("\"I'm so sorry my lord I've never seen you before, please spare my life.\"")
+            time.sleep(1)
+            A4 = input("\nThe guard kneels at your feet, what do you do?(kill, spare) ")
+            if A4 == "kill".lower():
+                print("Consumed by your anger and hatred for the sith, you strike down the defensless guard. Your dark side points increase by one.")
+                dp = 1
                 break
+            if A4 == "spare".lower():
+                print("Seeing no point in destroying the guard, you continue into the tower. Your light side points have increased by one.")
+                lp = 1
+                break
+        else:
+            print("At the sound of your voice, the guard stands up quickly realizing you are a jedi.")
+            time.sleep(1)
+            print("He ignites his red lightsaber!")
+            time.sleep(.833)
+            print("\"Now you die jedi!\"")
+            Dnd.docombat()
+            break
     if A == "sneak":
         if player == sentinel:
-            A2 = random.randint(1,3)
-            if A2 == 3:
+            A2 = random.randint(1,4)
+        else:
+            A2 = random.randint(1,2)
+            if A2 == 1:
                 print("The guard perks up and looks directly at you!")
                 A3 = input("\"Who the hell are you!?\"\n")
                 if "ragnos".lower() in A3:
@@ -281,20 +285,20 @@ while True:
                         print("Seeing no point in destroying the guard, you continue into the tower. Your light side points have increased by one.")
                         lp = 1
                         break
+                else:
+                    print("\"You think you'd fool me jedi scum? Now you die!\"")
+                    Dnd.docombat()
+                    break
             else:
                 print("You successfully stealth past the sleeping guard!")
             break
     else:
         print("invalid input please don't use caps and spell correctly")
 
+if player.hp > 0:
+    print("\n\nYou've successfully moved on!")
 
 
-
-
-
-
-
-print("\n\nYou've successfully moved on!")
 
 
 
