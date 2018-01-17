@@ -63,6 +63,19 @@ class Dnd(object):
             else:
                 print("You don't have enough mana points!")
 
+#long rest
+    def longrest():
+        print("You take a short rest and meditate to heal yourself. You now have full hp and mp.")
+        if player == counsular:
+            player.hp = 15
+            player.mp = 30
+        if player == sentinel:
+            player.hp = 20
+            player.mp = 20
+        if player == guardian:
+            player.hp = 25
+            player.mp = 10
+
 #force push
     def force_push():
         if player.mp >= 5:
@@ -153,7 +166,9 @@ class Dnd(object):
 guardian = Dnd(25, 10, {"robes": 1, "lightsaber": 1}, ["flurry", "force push"])
 sentinel = Dnd(20, 20, {"robes": 1, "lightsaber": 1}, ["force push", "heal", "power strike"])
 counsular = Dnd(15, 30, {"lightsaber": 1, "robes": 1}, ["heal", "force push", "repulse"])
-opponent = Dnd(20, 10, {"sword": 1, "key": 1}, ["power strike"])
+guard = Dnd(20, 10, {"lightsaber": 1, "sith robes": 1}, ["power strike"])
+commander = Dnd(30,20,{"lightsaber": 1, "sith robes": 1},["flurry"])
+
 
 
 #Welcome and choosing name
@@ -223,6 +238,7 @@ while True:
 #time.sleep(3)
 
 #First time the player gets to play lol first interaction with a guard at the front gate
+opponent = guard
 while player.hp > 0:
     A = input("\nIn front of the tower, you can see a guard sitting near the enterance of the tower, slouching in his chair nodding off. What do you do? You can attempt to sneak past, fight him, or talk to him. ")
     if A == "fight":
@@ -297,6 +313,21 @@ while player.hp > 0:
 
 if player.hp > 0:
     print("\n\nYou've successfully moved on!")
+    time.sleep(1)
+    print("As soon as you enter, you see a closed off door to your right. You can go inside and safely take a long rest to heal and restore mana.")
+    while True:
+        B1 = input("Would you like to take a long rest? (y/n) ")
+        if B1 == "y".lower():
+            Dnd.longrest()
+            break
+        if B1 == "n".lower():
+            print("You decide to press on.")
+            break
+
+
+
+
+
 
 
 
