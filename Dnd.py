@@ -1,6 +1,11 @@
 #imports
 import random
 import time
+import sys
+
+#global variables
+dp = 0
+lp = 0
 
 #defining class
 class Dnd(object):
@@ -21,9 +26,11 @@ class Dnd(object):
         Function for taking certain damage
         """
         if opponent == guard:
-            player.hp -= random.randint(1,5)
+            player.hp -= random.randint(1,4)
         if opponent == commander:
-            player.hp -= random.randint(2,6)
+            player.hp -= random.randint(2,5)
+        if opponent == lord:
+            player.hp -= random.randint(3,5)
         if player.hp < 0:
             player.hp = 0
         if player.hp > 0:
@@ -59,6 +66,20 @@ class Dnd(object):
         if opponent.hp > 0:
             Dnd.lose_hp()
 
+#the force lightning ability
+    def lightning():
+        if "lightning" in player.feats:
+            if player.mp >= 5:
+                print("Feeding into your anger, you strike at your opponent with a powerful blast of lightning!")
+                player.mp -= 5
+                opponent.hp -= random.randint(5,15)
+                print(f"You're opponent now has {opponent.hp} health left!")
+                Dnd.lose_hp()
+            else:
+                print("You don't have enough mana points!")
+        else:
+            print("You are not in tune with the dark side enough to use this!")
+
 #the heal ability
     def heal():
         if player == counsular:
@@ -73,7 +94,6 @@ class Dnd(object):
 
 #long rest
     def longrest():
-        print("You take a short rest and meditate to heal yourself. You now have full hp and mp.")
         if player == counsular:
             player.hp = 15
             player.mp = 30
@@ -129,6 +149,8 @@ class Dnd(object):
                     Dnd.lose_hp()
             if a == "heal".lower():
                 Dnd.heal()
+            if a == "lightning":
+                Dnd.lightning()
             if a == "status":
                 Dnd.status()
             if a == "force push":
@@ -168,14 +190,17 @@ class Dnd(object):
                             Dnd.lose_hp()
                     else:
                         print("An explosion of telekenetik energy erupts from your body, knocking your opponent to the floor ten feet away! Your opponent loses a turn!")
+        if player.hp == 0:
+            sys.exit
 
 
 #defines the traits of each class and the first opponent
-guardian = Dnd(25, 10, {"robes": 1, "lightsaber": 1}, ["flurry", "force push"])
-sentinel = Dnd(20, 20, {"robes": 1, "lightsaber": 1}, ["force push", "heal", "power strike"])
-counsular = Dnd(15, 30, {"lightsaber": 1, "robes": 1}, ["heal", "force push", "repulse"])
+guardian = Dnd(26, 10, {"robes": 1, "lightsaber": 1}, ["flurry", "force push"])
+sentinel = Dnd(21, 20, {"robes": 1, "lightsaber": 1}, ["force push", "heal", "power strike"])
+counsular = Dnd(16, 30, {"lightsaber": 1, "robes": 1}, ["heal", "force push", "repulse"])
 guard = Dnd(20, 10, {"lightsaber": 1, "sith robes": 1}, ["power strike"])
 commander = Dnd(30,20,{"lightsaber": 1, "sith robes": 1},["flurry"])
+lord = Dnd(40, 40, {"lightsaber":1,"lord's robes":1}, ["blast", "choke"])
 
 
 
@@ -257,9 +282,13 @@ while player.hp > 0:
         print("\nAs you approach the guard, he takes notice to you and arms his red lightsaber!")
         Dnd.docombat()
         break
+    if A == "atk":
+        print("\nAs you approach the guard, he takes notice to you and arms his red lightsaber!")
+        Dnd.docombat()
+        break
     if A == "talk":
         if player == counsular:
-            print("'Maybe if I convince him I'm his leader, or ask to pass nicely I can go...' you think to yourself")
+            print("'Maybe if I use the sith lord's name, or ask to pass or go kindly I can get past him...' you think to yourself")
             time.sleep(1.5)
         print("The man perks up a little bit but goes back into his slouching position.")
         A1 = input("\"What do you want?\" ")
@@ -275,11 +304,11 @@ while player.hp > 0:
             A4 = input("\nThe guard kneels at your feet, what do you do?(kill, spare) ")
             if A4 == "kill".lower():
                 print("Consumed by your anger and hatred for the sith, you strike down the defensless guard. Your dark side points increase by one.")
-                dp = 1
+                dp += 1
                 break
             if A4 == "spare".lower():
                 print("Seeing no point in destroying the guard, you continue into the tower. Your light side points have increased by one.")
-                lp = 1
+                lp += 1
                 break
         else:
             print("At the sound of your voice, the guard stands up quickly realizing you are a jedi.")
@@ -319,22 +348,60 @@ while player.hp > 0:
     else:
         print("invalid input please don't use caps and spell correctly")
 
+#Encounter number two. can take a long rest but then you'll be attacked by a commander or press on and get a chance for another lp or dp
 if player.hp > 0:
+    opponent = commander
     print("\n\nYou've successfully moved on!")
     time.sleep(1)
-    print("As soon as you enter, you see a closed off door to your right. You can go inside and safely take a long rest to heal and restore mana.")
+    print("As soon as you enter, you see a closed off door to your right. You can go inside and safely take a long rest to heal and restore mana, however time will pass in the game.")
     while True:
         B1 = input("Would you like to take a long rest? (y/n) ")
         if B1 == "y".lower():
+            print("You take a short rest and meditate to heal yourself. You now have full hp and mp.")
             Dnd.longrest()
+            print("Upon exiting the room, a large sith commander stands in front of you! He must of sensed a jedi!")
+            time.sleep(2)
+            print("'Don't bother trying to talk your way out of this one jedi, you die here!'")
+            Dnd.docombat()
             break
         if B1 == "n".lower():
             print("Time is of the essence, you press on.")
+            time.sleep(1)
+            print("As you enter, you see a stair case and start to ascend sensing a power force user above you.")
+            time.sleep(3)
+            print("As you're sneaking up the stairs, you see sith a commander with his back turned to you.")
+            time.sleep(3)
+            if dp == 1:
+                print("'I could get up behind him and kill another sith if I wanted to...' you think to yourself")
+            if lp == 1:
+                print("'I could probably pass by unnoticed and avoid another needless conflict...' you think to yourself.")
+            else:
+                print("'He's completely unaware of me, and isn't in my way. He is a powerful sith though... what should I do?' you think to yourself.")
+            C = input("What will you do? (kill/sneak)\n")
+            if C == "kill":
+                dp += 1
+                print("Anger for the sith makes your blood boil.")
+                time.sleep(1.2)
+                print("You approach the command, lightsaber in hand.")
+                time.sleep(1.2)
+                print("You ignite the blade into the commander's back.")
+                time.sleep(1)
+                print("The former jedi knight looks down at the lightsaber, and for a second thought it was red before realizing it's blue hue.")
+                time.sleep(3)
+                print("The commander falls to the floor, motionless.")
+                time.sleep(1)
+                print("A dark energy swirls around you body and you feel your dark side powers grow. It also heals you and restores your mana to full.")
+                Dnd.longrest()
+                time.sleep(1)
+                player.feats.append("lightning")
+                print("You have learned the ability force lightning! Good job you murderer.")
             break
-if player.hp > 0:
-    print("\nThe commander spots you and charges you!!")
-    opponent = commander
-    Dnd.docombat()
+
+
+
+
+
+
 
 
 
