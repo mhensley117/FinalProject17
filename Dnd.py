@@ -20,7 +20,10 @@ class Dnd(object):
         """
         Function for taking certain damage
         """
-        player.hp -= random.randint(1,6)
+        if opponent == guard:
+            player.hp -= random.randint(1,5)
+        if opponent == commander:
+            player.hp -= random.randint(2,6)
         if player.hp < 0:
             player.hp = 0
         if player.hp > 0:
@@ -32,7 +35,12 @@ class Dnd(object):
 
 #function that sets the damage of the lightsaber
     def attack():
-        opponent.hp -= random.randint(2,8)
+        if player == guardian:
+            opponent.hp -= random.randint(4,9)
+        if player == counsular:
+            opponent.hp -= random.randint(2,8)
+        if player == sentinel:
+            opponent.hp -= random.randint(3,8)
         if opponent.hp < 0:
             opponent.hp = 0
 
@@ -88,7 +96,7 @@ class Dnd(object):
 #repulse ability
     def repulse():
         if player.mp >= 8:
-            opponent.hp -= random.randint(3,8)
+            opponent.hp -= random.randint(4,10)
             player.mp -= 8
             print(f"You now have {player.mp} mana points left.")
         else:
@@ -321,10 +329,12 @@ if player.hp > 0:
             Dnd.longrest()
             break
         if B1 == "n".lower():
-            print("You decide to press on.")
+            print("Time is of the essence, you press on.")
             break
-
-
+if player.hp > 0:
+    print("\nThe commander spots you and charges you!!")
+    opponent = commander
+    Dnd.docombat()
 
 
 
