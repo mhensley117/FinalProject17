@@ -397,17 +397,17 @@ while True:
         print("You take a short rest and meditate to heal yourself. You now have full hp and mp.")
         Dnd.longrest()
         print("Upon exiting the room, a large sith commander stands in front of you! He must of sensed a jedi!")
-        #time.sleep(2)
+        time.sleep(2)
         print("'Don't bother trying to talk your way out of this one jedi, you die here!'")
         Dnd.docombat()
         break
     elif B1 == "n".lower():
         print("Time is of the essence, you press on.")
-        #time.sleep(1)
+        time.sleep(1)
         print("As you enter, you see a stair case and start to ascend sensing a power force user above you.")
-        #time.sleep(3)
+        time.sleep(3)
         print("As you're sneaking up the stairs, you see sith a commander with his back turned to you.")
-        #time.sleep(3)
+        time.sleep(3)
         if dp == 1:
             print("'I could get up behind him and kill another sith if I wanted to...' you think to yourself")
         if lp == 1:
@@ -585,10 +585,17 @@ elif dp == 1:
             E += 2
             break
 
+#special encounter for going full dark side. If you kill darth ragnos, you actually start an empire of your own with your powers
 elif dp == 2:
     print("You really came here because you are done with the council.")
     time.sleep(2)
     print("Looking at you previous actions, you have no intention of returning back to the council as a jedi.")
+    time.sleep(4)
+    print("You are very strong with the dark side of the force.")
+    time.sleep(3)
+    print("I sense you have a certain power that the council would be most displeased with...")
+    time.sleep(4)
+    print("You need a teacher. I can show you the ways of the Force.")
     time.sleep(4)
     while True:
         D2 = input(f"\"What do you say, {name}, will you join me?\"(y/n)  ")
