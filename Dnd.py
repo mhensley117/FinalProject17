@@ -3,7 +3,7 @@ import random
 import time
 import sys
 
-#global variables for lightside and dark side points
+#global variables for lightside and dark side points, C1 is used to put a loop inside a loop, and E to get the correct epilouge depending on the player's actions
 dp = 0
 lp = 0
 C1 = 0
@@ -153,8 +153,8 @@ class Dnd(object):
 
 #allows the player to decide what they will do in combat. basically calls whatever function the user inputs except for push and repulse
 #which rolls a 1d4 to see if the opponent will attack the player that turn or get stunned
-    def docombat():
 #only allows combat while the player has hp bc otherwise they'd be dead
+    def docombat():
         while opponent.hp > 0:
             a = input(f"\n-You can attack (atk) or use one of your feats, {player.feats}. You may also check your status (status).\n-What will you do?\n")
             if a == "atk".lower():
@@ -211,6 +211,7 @@ class Dnd(object):
                     else:
                         print("An explosion of telekenetik energy erupts from your body, knocking your opponent to the floor ten feet away! Your opponent loses a turn!")
 #this function cuts out all system function when the player gets a game over screen bc they're dead
+#also makes it so that the opponent hp won't ever get printed as a negative number
             if player.hp == 0:
                 sys.exit()
             if opponent.hp < 0:
@@ -232,18 +233,18 @@ lord = Dnd(30, 40, {"lightsaber":1,"lord's robes":1}, ["blast", "choke"])
 
 #Welcome and choosing name, threw the name in there bc I know that people like to put in silly things so this is just for fun
 print("""Welcome to Michael Hensley's Star Wars DnD game! First step before you start your journey is to choose a character name.""")
-#time.sleep(2)
+time.sleep(2)
 name = input("What will your character's name be?  ")
 
 #class information for the player to read
 print(f"-Welcome, jedi knight {name}. There are three classes you may choose from.")
-#time.sleep(2)
+time.sleep(2)
 print(f"""-The first, the guardian has an health points of {guardian.hp}, mana points of {guardian.mp}, starts
 with an inventory of {guardian.inven}, and is able to use {guardian.feats}.
 Guardians are almost always take the combat path because of their physical conditioning and combat skills.""")
-#time.sleep(4)
+time.sleep(4)
 print(f"-Next is the sentinel, who has {sentinel.hp} hp, {sentinel.mp} mp, an inventory of {sentinel.inven}, and can use {sentinel.feats}.\nSentinels are also stealthy by nature.")
-#time.sleep(4)
+time.sleep(4)
 print(f"""-The final class is the counsular, who has {counsular.hp} hp,{counsular.mp} mp, an inventory of {counsular.inven}, and can use
 {counsular.feats}.
 Furthermore, they are good talkers by nature.""")
@@ -267,37 +268,37 @@ while True:
 
 
 #exposition and plot before the game actually starts
-#time.sleep(3)
-#print("\nThere is yet unrest in the galaxy.")
-#time.sleep(1.5)
-#print("The jedi-sith wars rage on")
-#time.sleep(1.5)
-#print("Thousands of jedi have died in the ongoing six year war.")
-#time.sleep(2)
-#print("However, hope has been restored to the jedi. The sith overlord's position has been revealed.")
-#time.sleep(3.5)
-#print("""You stand in the council room which you are so familiar with, the same place where you were granted the rank of knight
-#six years before.""")
-#time.sleep(4)
-#print("\"This war is coming to an end,\" Master Vrook says.")
-#time.sleep(2)
-#print("\"This mission you're about to embark can very well bring this world back to peace and balance.\"")
-#time.sleep(3)
-#print("\"We need you to travel to Mustafar to these coordinates, and defeat Darth Ragnos,\" Master Alis continued.")
-#time.sleep(4)
-#print(f"\"Her defeat will be a quick and decisive end to this war. We're counting on you, {name}.\"")
-#time.sleep(4)
-#print(f"\"Furthermore, if you succeed in this, your title will be changed to master {name}, and you will be granted a seat on this council.\"")
-#time.sleep(3)
-#print("""
+time.sleep(3)
+print("\nThere is yet unrest in the galaxy.")
+time.sleep(1.5)
+print("The jedi-sith wars rage on")
+time.sleep(1.5)
+print("Thousands of jedi have died in the ongoing six year war.")
+time.sleep(2)
+print("However, hope has been restored to the jedi. The sith overlord's position has been revealed.")
+time.sleep(3.5)
+print("""You stand in the council room which you are so familiar with, the same place where you were granted the rank of knight
+six years before.""")
+time.sleep(4)
+print("\"This war is coming to an end,\" Master Vrook says.")
+time.sleep(2)
+print("\"This mission you're about to embark can very well bring this world back to peace and balance.\"")
+time.sleep(3)
+print("\"We need you to travel to Mustafar to these coordinates, and defeat Darth Ragnos,\" Master Alis continued.")
+time.sleep(4)
+print(f"\"Her defeat will be a quick and decisive end to this war. We're counting on you, {name}.\"")
+time.sleep(4)
+print(f"\"Furthermore, if you succeed in this, your title will be changed to master {name}, and you will be granted a seat on this council.\"")
+time.sleep(3)
+print("""
 
-#You land to the coordinates on Mustafar. You look up and see a giant black and red tower raise high above you.
+You land to the coordinates on Mustafar. You look up and see a giant black and red tower raise high above you.
 
-#""")
-#time.sleep(3)
+""")
+time.sleep(3)
 
-#First time the player gets to play lol first interaction with a guard at the front gate
-
+#First time the player gets to decide what they want to do first interaction with a guard at the front gate
+#use loops so that a misinput will just make the dialouge box open again
 opponent = guard  # < this is how I can switch between opponents with different stats. before a fight might occur between anybody I switch what opponent equals, bc opponent is the variable in the combat function
 while player.hp > 0:
     A = input("\nIn front of the tower, you can see a guard sitting near the enterance of the tower, slouching in his chair nodding off. What do you do? You can attempt to sneak past, fight him, or talk to him. ")
@@ -379,12 +380,12 @@ while player.hp > 0:
     else:
         print("invalid input please don't use caps and spell correctly")
 
-#Encounter number two. can take a long rest but then you'll be attacked by a commander or press on and get a chance for another lp or dp b finding the commander with his back turned
+#Encounter number two. can take a long rest but then you'll be attacked by a commander or don't take a rest and get a chance for another lp or dp by finding the commander with his back turned
 #The "time passing in game" just means that the commander will sense your presence and find you as soon as you come out
-#evil thing (killing him) to do obviously so a dark side point is awarded
+#killing him give a dark side point (dp)
 #use append function to add lightning to the list of usable abilities in combat
-#clearly the light side thing to do so a light side point is awarded
-#uses append function to add  to the list of usable abilities in combat
+#sparing gives a light side point (lp)
+#uses append function to add  to the list of usable abilities in combat, lightning for dp and revitalize for lp
 
 opponent = commander # < switches the opponent to commander stats so that they fight him instead of the guard stats
 print("\n\nYou've successfully moved on into the tower!")
@@ -457,6 +458,7 @@ if C1 == 1:
             print("Invalid input please retry.")
 
 print("\n\n\nYou've successfully moveed on!")
+Dnd.longrest()
 opponent = lord
 time.sleep(1)
 print("Finally, you come to the top of the staircase.")
@@ -514,8 +516,9 @@ elif "your father" in D:
     print("\"...um.. j-just listen to what I have to say...\"")
 else:
     print("\"I don't believe that is why you came here really.\"")
-
 time.sleep(3)
+
+#special encounter for if the player has two light side points
 if lp == 2:
     print("Suddenly, her confidence seems to subside as if she has realized the powerful light aura surronding you.")
     time.sleep(3)
@@ -554,6 +557,7 @@ if lp == 2:
                 E += 2
                 break
 
+#special encounter for having one dark side point. possible to have one lp and one dp, but the dp overrides the lp because dark side completely goes against everything the jedi stand for
 elif dp == 1:
     print("\"I sense that you are strong in the dark side of the force.\"")
     time.sleep(2)
@@ -600,6 +604,7 @@ elif dp == 2:
             E += 3
             break
 
+#If one lp or no l/d points at all, generic encounter
 else:
     print("I believe you have come here to be done with the council.")
     time.sleep(3)
@@ -627,6 +632,7 @@ else:
             E += 2
             break
 
+#every other ending changes E's value, so this one is if you spare darth ragnos (need to have 2 lp)
 if E == 0:
     print("You choosen the path of the true jedi.")
     time.sleep(2)
@@ -641,6 +647,7 @@ if E == 0:
     print("Thanks for playing!!")
     sys.exit()
 
+#Evil ending were you join the sith and destroy the jedi
 if E == 1:
     print("You and Darth Ragnos go to the jedi council and slaughter everyone")
     time.sleep(2)
@@ -653,6 +660,7 @@ if E == 1:
     print("Thanks for playing!")
     sys.exit()
 
+#Most likely ending where you kill darth ragnos and return to the council as a hero
 if E == 2:
     print("You have choosen to kill Darth Ragnos.")
     time.sleep(2)
@@ -663,6 +671,7 @@ if E == 2:
     print("Thanks for playing!")
     sys.exit()
 
+#Most evil ending possible, need to have to dp
 if E == 3:
     print("After beheading Darth Ragnos, you go through the castle and kill everybody in sight.")
     time.sleep(4)
@@ -674,10 +683,6 @@ if E == 3:
     time.sleep(2)
     print("Thanks for playing! :p")
     sys.exit()
-
-
-
-
 
 
 
